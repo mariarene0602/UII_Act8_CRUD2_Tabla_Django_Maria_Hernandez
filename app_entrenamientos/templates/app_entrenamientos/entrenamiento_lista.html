@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Entrenamientos - Entrenamiento de Perros</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Variables de color y estilo */
+        :root {
+            --primary-color: #4CAF50; /* Verde principal */
+            --secondary-color: #007bff; /* Azul para acciones */
+            --danger-color: #dc3545; /* Rojo para borrar */
+            --warning-color: #ffc107; /* Amarillo para editar */
+            --info-color: #17a2b8; /* Azul claro para info/ver */
+            --text-color: #333;
+            --background-light: #f8f9fa;
+            --background-dark: #343a40;
+            --border-color: #e9ecef;
+            --card-bg: white;
+            --shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        /* Estilos generales del cuerpo */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-light);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        /* Encabezado */
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1.8em 0;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+
+        h1 {
+            margin: 0;
+            font-weight: 600;
+        }
+
+        /* Barra de Navegación */
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            text-align: center;
+            background-color: var(--background-dark);
+            margin: 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        nav ul li {
+            display: inline-block;
+            margin: 0;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            padding: 15px 25px;
+            display: block;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            font-weight: 400;
+        }
+
+        nav ul li a:hover {
+            background-color: #0056b3; /* Un tono de azul oscuro para hover */
+            transform: translateY(-2px);
+        }
+
+        /* Contenedor principal */
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 30px auto;
+            background-color: var(--card-bg);
+            padding: 30px 40px;
+            box-shadow: var(--shadow);
+            border-radius: 12px;
+            overflow-x: auto; /* Para tablas en móviles */
+        }
+
+        /* Pie de página */
+        footer {
+            text-align: center;
+            padding: 25px;
+            background-color: var(--background-dark);
+            color: white;
+            margin-top: 50px;
+            font-size: 0.9em;
+        }
+
+        /* Títulos de sección */
+        h2, h3 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+            margin-bottom: 25px;
+            font-weight: 600;
+        }
+
+        /* Estilos de tabla */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 25px;
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            overflow: hidden; /* Asegura bordes redondeados */
+        }
+
+        th, td {
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            text-align: left;
+        }
+
+        th {
+            background-color: var(--border-color);
+            color: var(--text-color);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.9em;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f4f6; /* Ligeramente diferente para filas pares */
+        }
+
+        /* Etiquetas de estado (Activo/Finalizado) */
+        .status-activo {
+            color: var(--primary-color);
+            font-weight: 600;
+            background-color: #e6ffe6;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.85em;
+        }
+
+        .status-inactivo {
+            color: var(--danger-color);
+            font-weight: 600;
+            background-color: #ffe6e6;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.85em;
+        }
+
+        /* Botones */
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            margin-top: 15px;
+            margin-right: 10px;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 0.95em;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .btn-primary { background-color: var(--primary-color); color: white; }
+        .btn-primary:hover { background-color: #3e8e41; transform: translateY(-1px); box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+
+        .btn-secondary { background-color: #6c757d; color: white; }
+        .btn-secondary:hover { background-color: #5a6268; transform: translateY(-1px); box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+
+        .btn-info { background-color: var(--info-color); color: white; }
+        .btn-info:hover { background-color: #138496; transform: translateY(-1px); box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+
+        .btn-warning { background-color: var(--warning-color); color: var(--text-color); }
+        .btn-warning:hover { background-color: #e0a800; transform: translateY(-1px); box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+
+        .btn-danger { background-color: var(--danger-color); color: white; }
+        .btn-danger:hover { background-color: #c82333; transform: translateY(-1px); box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+
+        /* Mensajes de feedback */
+        .message {
+            padding: 15px 20px;
+            margin-bottom: 25px;
+            border-radius: 8px;
+            font-weight: 500;
+            border: 1px solid transparent;
+            display: flex;
+            align-items: center;
+        }
+
+        .message.success {
+            background-color: #d4edda;
+            color: #155724;
+            border-color: #c3e6cb;
+        }
+
+        .message.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border-color: #f5c6cb;
+        }
+        .message.warning {
+            background-color: #fff3cd;
+            color: #856404;
+            border-color: #ffeeba;
+        }
+
+        /* Estilos de formulario (Aunque esta plantilla no tiene formulario, se incluyen por consistencia si se copiara este CSS) */
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: 600; color: var(--text-color); }
+        .form-control {
+            width: 100%; padding: 12px 15px; border: 1px solid var(--border-color); border-radius: 8px;
+            box-sizing: border-box; font-family: 'Poppins', sans-serif; font-size: 1em;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .form-control:focus { border-color: var(--secondary-color); box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25); outline: none; }
+        .form-control[type="checkbox"] { width: auto; margin-right: 10px; }
+        .form-check { display: flex; align-items: center; margin-top: 10px; }
+        .form-check-label { margin-bottom: 0; font-weight: normal; }
+        .errorlist { color: var(--danger-color); list-style-type: none; padding-left: 0; margin-top: 8px; font-size: 0.9em; }
+        .errorlist li { margin-bottom: 5px; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Negocio de Entrenamiento de Perros</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="{% url 'app_entrenamientos:lista_entrenamientos' %}">Ver Entrenamientos</a></li>
+            <li><a href="{% url 'app_entrenamientos:crear_entrenamiento' %}">Añadir Entrenamiento</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="message {{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <h2>Entrenamientos Disponibles</h2>
+        <a href="{% url 'app_entrenamientos:crear_entrenamiento' %}" class="btn btn-primary">➕ Añadir Nuevo Entrenamiento</a>
+
+        {% if entrenamientos %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tipo</th>
+                        <th>Descripción</th>
+                        <th>Inicio</th>
+                        <th>Fin</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for entrenamiento in entrenamientos %}
+                    <tr>
+                        <td>{{ entrenamiento.tipo_entrenamiento }}</td>
+                        <td>{{ entrenamiento.descripcion|default:"N/A"|truncatechars:50 }}</td>
+                        <td>{{ entrenamiento.fecha_inicio|date:"d M Y" }}</td>
+                        <td>{{ entrenamiento.fecha_fin|date:"d M Y"|default:"Indefinido" }}</td>
+                        <td>
+                            {% if entrenamiento.activo %}
+                                <span class="status-activo">Activo</span>
+                            {% else %}
+                                <span class="status-inactivo">Finalizado</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{% url 'app_entrenamientos:detalle_entrenamiento' entrenamiento.pk %}" class="btn btn-info btn-sm">Ver</a>
+                            <a href="{% url 'app_entrenamientos:editar_entrenamiento' entrenamiento.pk %}" class="btn btn-warning btn-sm">Editar</a>
+                            <a href="{% url 'app_entrenamientos:borrar_entrenamiento' entrenamiento.pk %}" class="btn btn-danger btn-sm">Borrar</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No hay entrenamientos registrados en este momento.</p>
+            <p>¡Anímate a <a href="{% url 'app_entrenamientos:crear_entrenamiento' %}">crear el primero</a>!</p>
+        {% endif %}
+    </div>
+
+    <footer>
+        <p>&copy; {% now "Y" %} Tu Negocio de Entrenamiento de Perros. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>
